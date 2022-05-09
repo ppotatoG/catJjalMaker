@@ -38,13 +38,7 @@
 			);
 		};
 
-		const Form = () => {
-			const [counter, setCounter] = React.useState(1);
-			const handleFormSubmit = (e) => {
-				e.preventDefault();
-				setCounter(counter + 1);
-				console.log('폼 전송됨');
-			}
+		const Form = ({handleFormSubmit}) => {
 			return (
 				<form onSubmit={handleFormSubmit}>
 					<input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
@@ -58,14 +52,14 @@
 				console.log('하트 눌렀음');
 			}
 			return (
-				<div className="main-card">
-					<img
-						src={img}
-						alt="고양이"
-						width="400"
-					/>
-					<button onClick={handleHeartClick}>🤍</button>
-				</div>
+					<div className="main-card">
+						<img
+							src={img}
+							alt="고양이"
+							width="400"
+						/>
+						<button onClick={handleHeartClick}>🤍</button>
+					</div>
 			);
 		};
 
@@ -91,17 +85,31 @@
 			);
 		};
 
-		const app = (
-			<div>
-				<Title children="1번째 고양이 가라사대" />
-				<Form />
-				<MainCard img="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
-				<Favorites />
-			</div>
-		);
+		const App = () =>{
+			const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+			const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+			const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+
+			const [counter, setCounter] = React.useState(1);
+			const [mainCat, setMainCat] = React.useState(CAT1);
+			const handleFormSubmit = (e) => {
+				e.preventDefault();
+				setCounter(counter + 1);
+				setMainCat(CAT2);
+			}
+
+			return (
+				<div>
+					<Title>{counter}번째 고양이 가라사대</Title>
+					<Form handleFormSubmit={handleFormSubmit}/>
+					<MainCard img={mainCat}/>
+					<Favorites />
+				</div>
+			);
+		};
 				
 		const reactApp = document.querySelector('#app')
-		ReactDOM.render(app, reactApp);
+		ReactDOM.render(<App />, reactApp);
 	</script>
 	</body>
 </html>
