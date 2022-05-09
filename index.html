@@ -32,16 +32,18 @@
     <script type="text/babel">
 		console.log('야옹 시작');
 		
-		const Title = () => {
+		const Title = (props) => {
 			return (
-				<h1>1번째 고양이 가라사대</h1>
+				<h1>{props.children}</h1>
 			);
 		};
 
 		const Form = () => {
+			const [counter, setCounter] = React.useState(1);
 			const handleFormSubmit = (e) => {
 				e.preventDefault();
-				console.log('폼 전송됨')
+				setCounter(counter + 1);
+				console.log('폼 전송됨');
 			}
 			return (
 				<form onSubmit={handleFormSubmit}>
@@ -91,7 +93,7 @@
 
 		const app = (
 			<div>
-				<Title />
+				<Title children="1번째 고양이 가라사대" />
 				<Form />
 				<MainCard img="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
 				<Favorites />
