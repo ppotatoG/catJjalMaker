@@ -22,9 +22,6 @@
 			flex-wrap: wrap;
 			gap: 15px;
 		}
-		.favorites img {
-			width: 150px;
-		}
 	</style>
 	<body>
 	<div id="app"></div>
@@ -42,8 +39,12 @@
 		};
 
 		const Form = () => {
+			const handleFormSubmit = (e) => {
+				e.preventDefault();
+				console.log('폼 전송됨')
+			}
 			return (
-				<form>
+				<form onSubmit={handleFormSubmit}>
 					<input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
 					<button type="submit">생성</button>
 				</form>
@@ -51,22 +52,29 @@
 		};
 
 		const MainCard = ({img}) => {
+			const handleHeartClick = () => {
+				console.log('하트 눌렀음');
+			}
 			return (
-					<div className="main-card">
-						<img
-							src={img}
-							alt="고양이"
-							width="400"
-						/>
-						<button>🤍</button>
-					</div>
+				<div className="main-card">
+					<img
+						src={img}
+						alt="고양이"
+						width="400"
+					/>
+					<button onClick={handleHeartClick}>🤍</button>
+				</div>
 			);
 		};
 
 		const CatItem = (props) => {
 			return (
 				<li>
-					<img src={props.img}/>
+					<img
+						alt="고양이"
+						src={props.img}
+						style={{width: '150px'}}
+					/>
 				</li>
 			);
 		};
