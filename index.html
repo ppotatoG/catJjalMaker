@@ -52,14 +52,14 @@
 				console.log('하트 눌렀음');
 			}
 			return (
-					<div className="main-card">
-						<img
-							src={img}
-							alt="고양이"
-							width="400"
-						/>
-						<button onClick={handleHeartClick}>🤍</button>
-					</div>
+				<div className="main-card">
+					<img
+						src={img}
+						alt="고양이"
+						width="400"
+					/>
+					<button onClick={handleHeartClick}>🤍</button>
+				</div>
 			);
 		};
 
@@ -76,11 +76,19 @@
 		};
 
 		const Favorites = () => {
+			const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+			const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+			const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+
+			const cats = [CAT1, CAT2, CAT3];
+
 			return (
 				<ul className="favorites">
-					<CatItem img="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
-					<CatItem img="https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn" />
-					<CatItem img="https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript" />
+					{
+						cats.map((img, idx) => (
+							<CatItem img={img} key={idx} />
+						))
+					}
 				</ul>
 			);
 		};
