@@ -47,10 +47,7 @@
 			);
 		};
 
-		const MainCard = ({img}) => {
-			const handleHeartClick = () => {
-				console.log('하트 눌렀음');
-			}
+		const MainCard = ({img, handleHeartClick}) => {
 			return (
 				<div className="main-card">
 					<img
@@ -75,17 +72,11 @@
 			);
 		};
 
-		const Favorites = () => {
-			const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
-			const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
-			const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
-
-			const cats = [CAT1, CAT2, CAT3];
-
+		const Favorites = ({favorites}) => {
 			return (
 				<ul className="favorites">
 					{
-						cats.map((img, idx) => (
+						favorites.map((img, idx) => (
 							<CatItem img={img} key={idx} />
 						))
 					}
@@ -106,12 +97,18 @@
 				setMainCat(CAT2);
 			}
 
+			const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
+			const handleHeartClick = () => {
+				console.log('하트 눌렀음');
+				setFavorites([...favorites, CAT3]);
+			}
+
 			return (
 				<div>
 					<Title>{counter}번째 고양이 가라사대</Title>
 					<Form handleFormSubmit={handleFormSubmit}/>
-					<MainCard img={mainCat}/>
-					<Favorites />
+					<MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+					<Favorites favorites={favorites}/>
 				</div>
 			);
 		};
