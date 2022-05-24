@@ -39,9 +39,19 @@
 		};
 
 		const Form = ({handleFormSubmit}) => {
+			const [value, setValue] = React.useState('');
+			const handleInputChange = (e) => {
+				setValue(e.target.value.toUpperCase());
+			}
 			return (
 				<form onSubmit={handleFormSubmit}>
-					<input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
+					<input
+						type="text"
+						name="name"
+						placeholder="영어 대사를 입력해주세요"
+						onChange={handleInputChange}
+						value={value}
+					/>
 					<button type="submit">생성</button>
 				</form>
 			);
@@ -85,9 +95,9 @@
 		};
 
 		const App = () =>{
-			const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
-			const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
-			const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+			const CAT1 = "http://placekitten.com/400/400";
+			const CAT2 = "http://placekitten.com/300/300";
+			const CAT3 = "http://placekitten.com/300/200";
 
 			const [counter, setCounter] = React.useState(1);
 			const [mainCat, setMainCat] = React.useState(CAT1);
@@ -115,6 +125,7 @@
 				
 		const reactApp = document.querySelector('#app')
 		ReactDOM.render(<App />, reactApp);
+
 	</script>
 	</body>
 </html>
