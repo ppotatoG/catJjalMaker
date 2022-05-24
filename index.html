@@ -38,11 +38,20 @@
 			);
 		};
 
-		const Form = ({handleFormSubmit}) => {
+		const Form = ({}) => {
 			const [value, setValue] = React.useState('');
+			const [errorMessage, setErrorMessage] = React.useState('');
+
 			const handleInputChange = (e) => {
 				setValue(e.target.value.toUpperCase());
+				/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(e.target.value) ? setErrorMessage('한글은 입력할 수 없습니다.') : setErrorMessage('');
 			}
+
+			const handleFormSubmit = (e) => {
+				e.preventDefault();
+				value === '' ? setErrorMessage('빈 값으로 만들 수 없습니다') : setErrorMessage('');
+			}
+
 			return (
 				<form onSubmit={handleFormSubmit}>
 					<input
@@ -53,6 +62,7 @@
 						value={value}
 					/>
 					<button type="submit">생성</button>
+					<p style={{ color: 'red' }}>{errorMessage}</p>
 				</form>
 			);
 		};
