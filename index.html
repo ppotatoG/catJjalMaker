@@ -30,26 +30,36 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script type="text/babel">
-		console.log('야옹 시작');
-		
 		const Title = (props) => {
 			return (
 				<h1>{props.children}</h1>
 			);
 		};
 
-		const Form = ({}) => {
+		const Form = ({updateMainCat}) => {
 			const [value, setValue] = React.useState('');
 			const [errorMessage, setErrorMessage] = React.useState('');
 
 			const handleInputChange = (e) => {
 				setValue(e.target.value.toUpperCase());
-				/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(e.target.value) ? setErrorMessage('한글은 입력할 수 없습니다.') : setErrorMessage('');
+				if(/[ㄱ-힣]/i.test(e.target.value)) {
+					setErrorMessage('한글은 입력할 수 없습니다.');
+				}
+				else {
+					setErrorMessage('');
+				}
 			}
 
 			const handleFormSubmit = (e) => {
 				e.preventDefault();
-				value === '' ? setErrorMessage('빈 값으로 만들 수 없습니다') : setErrorMessage('');
+				if(value === '') {
+					setErrorMessage('빈 값으로 만들 수 없습니다')
+					return false;
+				}
+				else {
+					setErrorMessage('');
+					updateMainCat();
+				}
 			}
 
 			return (
@@ -67,7 +77,7 @@
 			);
 		};
 
-		const MainCard = ({img, handleHeartClick}) => {
+		const MainCard = ({img, onHeartClick}) => {
 			return (
 				<div className="main-card">
 					<img
@@ -75,7 +85,7 @@
 						alt="고양이"
 						width="400"
 					/>
-					<button onClick={handleHeartClick}>🤍</button>
+					<button onClick={onHeartClick}>🤍</button>
 				</div>
 			);
 		};
@@ -111,23 +121,21 @@
 
 			const [counter, setCounter] = React.useState(1);
 			const [mainCat, setMainCat] = React.useState(CAT1);
-			const handleFormSubmit = (e) => {
-				e.preventDefault();
-				setCounter(counter + 1);
+			const updateMainCat = () => {
 				setMainCat(CAT2);
+				setCounter(counter + 1);
 			}
 
 			const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
 			const handleHeartClick = () => {
-				console.log('하트 눌렀음');
 				setFavorites([...favorites, CAT3]);
 			}
 
 			return (
 				<div>
 					<Title>{counter}번째 고양이 가라사대</Title>
-					<Form handleFormSubmit={handleFormSubmit}/>
-					<MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+					<Form updateMainCat={updateMainCat}/>
+					<MainCard img={mainCat} onHeartClick={handleHeartClick} />
 					<Favorites favorites={favorites}/>
 				</div>
 			);
