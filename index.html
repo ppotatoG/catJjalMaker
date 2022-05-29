@@ -30,6 +30,14 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script type="text/babel">
+		const fetchCat = async (text) => {
+			const openApiDomain = 'https://cataas.com';
+			const response = await fetch(`${openApiDomain}/cat/says/${text}?json=true`);
+			const responseJson = await response.json();
+
+			return `${OPEN_API_DOMAIN}/${responseJson.url}`;
+		}
+
 		const jsonLocalStorage = {
 			setItem: (key, value) => {
 				localStorage.setItem(key, JSON.stringify(value));
@@ -60,6 +68,7 @@
 			}
 
 			const handleFormSubmit = (e) => {
+				console.log('handleFormSubmit')
 				e.preventDefault();
 				if(value === '') {
 					setErrorMessage('빈 값으로 만들 수 없습니다')
@@ -67,7 +76,7 @@
 				}
 				else {
 					setErrorMessage('');
-					updateMainCat();
+					updateMainCat(value);
 				}
 			}
 
@@ -124,16 +133,18 @@
 		};
 
 		const App = () =>{
-			const CAT1 = "http://placekitten.com/400/400";
-			const CAT2 = "http://placekitten.com/300/300";
-			const CAT3 = "http://placekitten.com/300/200";
+			const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+			const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+			const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
 
 			const [counter, setCounter] = React.useState(
 				jsonLocalStorage.getItem('counter')
 			);
 			const [mainCat, setMainCat] = React.useState(CAT1);
-			const updateMainCat = () => {
-				setMainCat(CAT2);
+
+			const updateMainCat = async (value) => {
+				const newCat = await fetchCat(value);
+				setMainCat(newCat);
 				const nextCounter = counter + 1;
 				setCounter(nextCounter);
 				jsonLocalStorage.setItem('counter', nextCounter);
